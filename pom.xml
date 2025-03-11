@@ -1,48 +1,81 @@
-# springboot-react-jobportal-app
-This Spring Boot with ReactJS sample app demonstrates.
-
-# Creating a React App
-
-Working with React does require that Node.js needs to be installed, And follow the below command to create the React App.
-  <strong>npx create-react-app app-frontend </strong>
-
-After the react app creation, we'll install Bootstrap, React Router, and reactstrap in the app-frontend directory:
-  <strong>npm install --save bootstrap@5.1 react-cookie@4.1.1 react-router-dom@5.3.0 reactstrap@8.10.0 </<strong>>
-
-Let's add Bootstrap's CSS file as an import in app/src/index.js:
-    import 'bootstrap/dist/css/bootstrap.min.css';
-
-To make your UI alignment fix, add a top margin to Bootrap’s container classes in app/src/App.css.
- .container, .container-fluid {
-    margin-top: 20px;
-    }
-
-# Starting Our React app
-    Now, our React app is ready to start our frontend application, follow the below command to start.
-<strong>npm start <strong>, can access react APP: http://localhost:3000 
-
-# Calling Our Spring Boot API
-To call our spring Boot API needs to set up our React application with package.json file to configure a proxy when calling the API.For that, we needs to be added URL for our API in package.json:
-  
-    ...
-    "proxy": "http://localhost:8080",
-    ... 
-   
-
-# Building and Packaging the Application:
-To build and package our React application with Spring Boot using Maven, we'll use the frontend-maven-plugin.
-
-This plugin will be responsible for packaging and copying our frontend application into our Spring Boot API build folder, used the below maven entry:
-
-   	...
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.5.6</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.bharathi.app</groupId>
+	<artifactId>springboot-react-jobportal-app</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>springboot-react-jobportal-app</name>
+	<description>Sample springboot-react-jobportal-app</description>
 	<properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
        <frontend-maven-plugin.version>1.11.3</frontend-maven-plugin.version>
         <node.version>v15.10.0</node.version>
         <yarn.version>v1.22.17</yarn.version>
 	</properties>
-    	...
-       <build>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+        <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+       </dependency>
+
+	<dependency>
+		<groupId>io.springfox</groupId>
+		<artifactId>springfox-boot-starter</artifactId>
+		<version>3.0.0</version>
+	</dependency>
+		
+		  <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+	</dependencies>
+
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -50,7 +83,7 @@ This plugin will be responsible for packaging and copying our frontend applicati
             </plugin>
         </plugins>
     </build>
-    <!-- To build Dev Environment -->
+
     <profiles>
         <profile>
             <id>dev</id>
@@ -61,7 +94,7 @@ This plugin will be responsible for packaging and copying our frontend applicati
                 <spring.profiles.active>dev</spring.profiles.active>
             </properties>
         </profile>
-        <!-- To build Prod Environment -->
+        
         <profile>
             <id>prod</id>
             <build>
@@ -143,60 +176,5 @@ This plugin will be responsible for packaging and copying our frontend applicati
             </properties>
         </profile>
     </profiles>
-
-
-
-# To build for Developemnt environment: 
-<strong> mvn clean install -P dev</strong>
-
-## To build for Production environemnt: 
-<strong> mvn clean install -P prod</strong>
-
-## Spring Boot API with React App:
- At the end, by adding the plugin, we can access our application by running spring boot application
- Now the React app will be fully integrated into our Spring Boot API, we can Access the application URL: http://localhost:8080/ 
-
-### Technology Used
-
- Sample project uses a number of open source projects to work properly:
-
-* [SpringBoot] - REST API Application framework
-* [ReactJS] - Frontend UI 
-* [Nodejs] - NodeJS
-* [Maven] - Build Tool
-* [H2]    -  in memory database
-* [Swagger] - API documentation
-
-### Development environment setup
-
-Follow the steps to bring up the development environment in your local and access the app.
-
-1) Install Git, Java, Maven and npm or yarn</br>
-2) Clone the project using "git clone https://github.com/Bharathidasan-tech/springboot-react-jobportal-app.git" </br>
-3) Build in local and Run</br>
-4) Also run command -> "java -jar springboot-react-jobportal-app-0.0.1-SNAPSHOT.war"</br>
-5) Access the Application at http://localhost:8080/</br>
-
-## APP UI 
-
-ULR: http://localhost:8080
-
-![Home Page](https://github.com/Bharathidasan-tech/springboot-react-jobportal-app/blob/main/documents/screens/homescreen.png)
-
-![List Page](https://github.com/Bharathidasan-tech/springboot-react-jobportal-app/blob/main/documents/screens/listpage.png)
-
-![Edit Details](https://github.com/Bharathidasan-tech/springboot-react-jobportal-app/blob/main/documents/screens/editpage.png)
-
-![Add Details](https://github.com/Bharathidasan-tech/springboot-react-jobportal-app/blob/main/documents/screens/addpage.png)
-
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job.)
-
-
-   [SpringBoot]: <https://projects.spring.io/spring-boot/>
-   [ReactJS]: https://reactjs.org/
-   [Maven]: <https://maven.apache.org>
-   [Git]: <https://git-scm.com>
-   [Java]: <https://go.java>
-   [Swagger]: <https://swagger.io/>
-   [Nodejs]: https://nodejs.org/en/
-   [H2]: https://www.h2database.com/html/main.html
+     
+</project>
